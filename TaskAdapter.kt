@@ -27,3 +27,23 @@ class TaskAdapter(private val tasks: MutableList<String>, private val onUpdate: 
         }
     }
 }
+holder.tvDescription.text = task.description
+        holder.tvDate.text = "Due: ${task.dueDate}"
+
+        holder.itemView.setOnClickListener { onItemClick(task) }
+        holder.itemView.setOnLongClickListener {
+            onItemLongClick(task)
+            true
+        }
+    }
+
+
+    
+
+
+  fun updateTasks(newList: List<Task>) {
+        taskList = newList
+        notifyDataSetChanged()
+    }
+}
+  
