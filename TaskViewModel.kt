@@ -1,40 +1,24 @@
-package com.example.todoapp.ui
+package com.example.todoapp.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.todoapp.data.local.TaskEntity
 import com.example.todoapp.data.repository.TaskRepository
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
+    val allTasks: LiveData<List<TaskEntity>> = repository.getAllTasks().asLiveData()
 
-
-
-
-class TaskViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository: TaskRepository
-    val allTasks: LiveData<List<Task>>
-
-    init {
-        val taskDao = TaskDatabase.getDatabase(application).taskDao()
-        repository = TaskRepository(taskDao)
-        allTasks = repository.allTasks
-    }
-
-    fun insert(task: Task) = viewModelScope.launch(Dispatchers.IO) {
+    fun insertTask(task: TaskEntity) = viewModelScope.launch {
         repository.insert(task)
-    }
-
-    fun update(task: Task) = viewModelScope.launch(Dispatchers.IO) {
-        repository.update(task)
-    }
-
-    fun delete(task: Task) = viewModelScope.launch(Dispatchers.IO) {
-        repository.delete(task)
     }
 }
 
-fun clearCompleted() {
-        viewModelScope.launch {
+class TaskViewModelFactory(private val repository: TaskRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return TaskViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}  
