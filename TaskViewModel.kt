@@ -35,3 +35,6 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         repository.delete(task)
     }
 }
+
+fun clearCompleted() {
+        viewModelScope.launch {
