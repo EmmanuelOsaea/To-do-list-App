@@ -1,49 +1,48 @@
-package com.example.todolist
+package com.example.todoapp.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todolist.databinding.ItemTaskBinding
+import com.example.todoapp.R
+import com.example.todoapp.data.local.TaskEntity
+import com.google.android.material.card.MaterialCardView
+import android.widget.TextView
 
-class TaskAdapter(private val tasks: MutableList<String>, private val onUpdate: () -> Unit) :
-    RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(
+    private var tasks: List<TaskEntity>,
+    private val onClick: (TaskEntity) -> Unit
+) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    inner class TaskViewHolder(val binding: ItemTaskBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val title: TextView = itemView.findViewById(R.id.tvTaskTitle)
+        private val desc: TextView = itemView.findViewById(R.id.tvTaskDescription)
+        private val priority: TextView = itemView.findViewById(R.id.tvPriority)
+        private val card: MaterialCardView = itemView as MaterialCardView
+
+        fun bind(task: TaskEntity) {
+            title.text = task.title
+            desc.text = task.description
+            priority.text = "Priority: ${task.priority}"
+
+            card.setOnClickListener { onClick(task) }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TaskViewHolder(binding)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_task, parent, false)
+        return TaskViewHolder(view)
     }
 
-    override fun getItemCount(): Int = tasks.size
+    override fun getItemCount() = tasks.size
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.binding.taskText.text = tasks[position]
-        holder.binding.deleteButton.setOnClickListener {
-            tasks.removeAt(position)
-            notifyItemRemoved(position)
-            onUpdate()
-        }
-    }
-}
-holder.tvDescription.text = task.description
-        holder.tvDate.text = "Due: ${task.dueDate}"
-
-        holder.itemView.setOnClickListener { onItemClick(task) }
-        holder.itemView.setOnLongClickListener {
-            onItemLongClick(task)
-            true
-        }
+        holder.bind(tasks[position])
     }
 
-
-    
-
-
-  fun updateTasks(newList: List<Task>) {
-        taskList = newList
+    fun updateList(newTasks: List<TaskEntity>) {
+        tasks = newTasks
         notifyDataSetChanged()
     }
 }
-  
