@@ -150,3 +150,47 @@ Toast.makeText(this, "Task Deleted 🗑️", Toast.LENGTH_SHORT).show()
     }
 }
 
+private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: TaskAdapter
+    private val viewModel: TaskViewModel by viewModels {
+        TaskViewModelFactory(TaskRepository(TaskDatabase.getDatabase(this).taskDao()))
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupRecyclerView()
+        observeTasks()
+        setupFab()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = TaskAdapter(listOf()) { /* handle click later if needed */ }
+        binding.recyclerViewTasks.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewTasks.adapter = adapter
+    }
+
+    private fun observeTasks() {
+        viewModel.allTasks.observe(this) { tasks ->
+            adapter.updateList(tasks)
+            updateTotalCount(tasks)
+        }
+    }
+
+    private fun setupFab() {
+        binding.fabAddTask.setOnClickListener {
+            AddEditTaskDialog(this) { task ->
+                lifecycleScope.launch {
+                    viewModel.insertTask(task)
+                }
+            }.show()
+        }
+    }
+
+    private fun updateTotalCount(tasks: List<TaskEntity>) {
+        binding.tvTitle.text = "My Smart To-Do List (${tasks.size} tasks)"
+    }
+}
+
