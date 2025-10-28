@@ -4,7 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+   <TextView
+        android:id="@+id/tvTitle"
+        android:text="My Smart Tasks"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    
+    
+   <EditText
         android:id="@+id/taskInput"
         android:hint="Enter a task"
         android:layout_width="match_parent"
