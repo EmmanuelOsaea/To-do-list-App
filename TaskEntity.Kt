@@ -2,7 +2,7 @@ package com.example.todoapp.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
+
 
 @Entity(tableName = "tasks")
 data class TaskEntity(
