@@ -1,14 +1,23 @@
+package com.example.todoapp.data.local
+
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
+
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM tasks ORDER BY dateCreated DESC")
-    fun getAllTasks(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM tasks ORDER BY createdAt DESC")
+    fun getAllTasks(): Flow<List<TaskEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTask(task: Task)
-
-    @Delete
-    suspend fun deleteTask(task: Task)
+    suspend fun insertTask(task: TaskEntity)
 
     @Update
-    suspend fun updateTask(task: Task)
+    suspend fun updateTask(task: TaskEntity)
+
+    @Delete
+    suspend fun deleteTask(task: TaskEntity)
+
+    @Query("DELETE FROM tasks WHERE isCompleted = 1")
+    suspend fun deleteCompletedTasks()
 }
