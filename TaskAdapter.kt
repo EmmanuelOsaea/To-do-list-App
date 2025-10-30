@@ -8,6 +8,7 @@ import com.example.todoapp.RecyclerView
 import com.example.todoapp.data.local.TaskEntity
 import com.google.android.material.card.MaterialCardView
 import android.widget.TextView
+import com.example.todoapp.databinding.ItemTaskBinding
 
 class TaskAdapter(
     private var tasks: List<TaskEntity>,
