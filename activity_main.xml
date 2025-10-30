@@ -18,10 +18,12 @@
     
     
    <EditText
-        android:id="@+id/taskInput"
-        android:hint="Enter a task"
+        android:id="@+id/etSearch"
+        android:hint="Search tasks..."
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:drawableStart="@android:drawable/ic_menu_search"
+       />
 
     <Button
         android:id="@+id/addButton"
