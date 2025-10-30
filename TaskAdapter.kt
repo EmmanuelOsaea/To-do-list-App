@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todoapp.R
+import com.example.todoapp.RecyclerView
 import com.example.todoapp.data.local.TaskEntity
 import com.google.android.material.card.MaterialCardView
 import android.widget.TextView
