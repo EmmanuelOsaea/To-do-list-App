@@ -1,6 +1,10 @@
 package com.example.todolist
 package com.example.todoapp.ui
+package com.example.smartnote
 
+
+
+import android.content.Intent
 import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.content.Context
@@ -13,9 +17,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewMod
 import com.example.todoapp.viewmodel.TaskViewModel
-
-
-
+import androidx.lifecycle.Observer
+import com.example.smartnote.adapter.Note
+import com.example.smartnote.viewmodel.NoteViewModel
 
 
 
