@@ -1,0 +1,28 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <EditText android:id="@+id/etTitle"
+            android:hint="Note Title"
+            android:textSize="18sp"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        <EditText android:id="@+id/etContent"
+            android:hint="Write your note..."
+            android:layout_width="match_parent" android:layout_height="200dp"
+            android:gravity="top"
+            android:inputType="textMultiLine" />
+
+        <EditText android:id="@+id/etTags"
+            android:hint="Tags (comma separated)"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        <Button android:id="@+id/btnSave"
+            android:text="Save Note"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>
