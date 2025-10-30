@@ -1,5 +1,5 @@
 package com.example.todoapp.data.local
-
+package com.example.todoapp.data
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -20,4 +20,8 @@ interface TaskDao {
 
     @Query("DELETE FROM tasks WHERE isCompleted = 1")
     suspend fun deleteCompletedTasks()
+}
+
+ @Query("SELECT * FROM tasks WHERE title LIKE '%' || :query || '%'")
+    fun searchTasks(query: String): LiveData<List<Task>>
 }
