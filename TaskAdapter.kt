@@ -1,13 +1,9 @@
 package com.example.todoapp.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todoapp.RecyclerView
 import com.example.todoapp.data.local.TaskEntity
-import com.google.android.material.card.MaterialCardView
-import android.widget.TextView
 import com.example.todoapp.databinding.ItemTaskBinding
 
 class TaskAdapter(
@@ -15,25 +11,19 @@ class TaskAdapter(
     private val onClick: (TaskEntity) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val title: TextView = itemView.findViewById(R.id.tvTaskTitle)
-        private val desc: TextView = itemView.findViewById(R.id.tvTaskDescription)
-        private val priority: TextView = itemView.findViewById(R.id.tvPriority)
-        private val card: MaterialCardView = itemView as MaterialCardView
-
+    inner class TaskViewHolder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(task: TaskEntity) {
-            title.text = task.title
-            desc.text = task.description
-            priority.text = "Priority: ${task.priority}"
+            binding.tvTaskTitle.text = task.title
+            binding.tvTaskDescription.text = task.description
+            binding.tvPriority.text = "Priority: ${task.priority}"
 
-            card.setOnClickListener { onClick(task) }
+            binding.root.setOnClickListener { onClick(task) }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_task, parent, false)
-        return TaskViewHolder(view)
+        val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TaskViewHolder(binding)
     }
 
     override fun getItemCount() = tasks.size
