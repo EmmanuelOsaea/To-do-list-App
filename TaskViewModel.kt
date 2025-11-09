@@ -6,10 +6,27 @@ import com.example.todoapp.data.repository.TaskRepository
 import kotlinx.coroutines.launch
 
 class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
+
     val allTasks: LiveData<List<TaskEntity>> = repository.getAllTasks().asLiveData()
 
     fun insertTask(task: TaskEntity) = viewModelScope.launch {
-        repository.insert(task)
+        repository.insertTask(task)
+    }
+
+    fun updateTask(task: TaskEntity) = viewModelScope.launch {
+        repository.updateTask(task)
+    }
+
+    fun deleteTask(task: TaskEntity) = viewModelScope.launch {
+        repository.deleteTask(task)
+    }
+
+    fun deleteCompletedTasks() = viewModelScope.launch {
+        repository.deleteCompletedTasks()
+    }
+
+    fun searchTasks(query: String): LiveData<List<TaskEntity>> {
+        return repository.searchTasks(query)
     }
 }
 
@@ -21,4 +38,4 @@ class TaskViewModelFactory(private val repository: TaskRepository) : ViewModelPr
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}  
+}
