@@ -6,5 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(private val dao: TaskDao) {
     fun getAllTasks(): Flow<List<TaskEntity>> = dao.getAllTasks()
-    suspend fun insert(task: TaskEntity) = dao.insert(task)
+    suspend fun insertTask(task: TaskEntity) = dao.insertTask(task)
+    suspend fun updateTask(task: TaskEntity) = dao.updateTask(task)
+    suspend fun deleteTask(task: TaskEntity) = dao.deleteTask(task)
+    suspend fun deleteCompletedTasks() = dao.deleteCompletedTasks()
+    fun searchTasks(query: String) = dao.searchTasks(query)
 }
